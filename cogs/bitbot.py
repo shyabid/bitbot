@@ -95,7 +95,9 @@ class Bitbot(commands.Cog):
         )
         embed.set_author(name=info.get("symbol"), icon_url=logo)
         embed.set_thumbnail(url=logo)
-        embed.set_image(url=attachment.url)
+        
+        if attachment: embed.set_image(url=attachment.url)
+        
         msg = await ctx.reply(embed=embed)
         
         await msg.add_reaction("⬆️")
