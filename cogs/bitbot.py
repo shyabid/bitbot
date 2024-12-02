@@ -81,7 +81,9 @@ class Bitbot(commands.Cog):
     async def predict(
         self, 
         ctx: commands.Context,
-        currency: str
+        currency: str,
+        *, 
+        attachment: discord.Attachment = None
     ) -> None:
         logo = f"https://cryptologos.cc/logos/thumbs/{currency}.png"
         info = requests.get(f"https://api.coincap.io/v2/assets/{currency}").json().get('data')
@@ -93,7 +95,7 @@ class Bitbot(commands.Cog):
         )
         embed.set_author(name=info.get("symbol"), icon_url=logo)
         embed.set_thumbnail(url=logo)
-        
+        embed.set_image(url=attachment.url)
         msg = await ctx.reply(embed=embed)
         
         await msg.add_reaction("⬆️")
