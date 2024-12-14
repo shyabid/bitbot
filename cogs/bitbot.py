@@ -110,6 +110,59 @@ class Bitbot(commands.Cog):
             "down_votes": []
         })
         
+    @commands.hybrid_command(
+        name="help",
+        description="Shows information about the bot and its commands"
+    )
+    async def help(self, ctx: commands.Context):
+        embed = discord.Embed(
+            title="📚 Bitbot Help",
+            description="Welcome to Bitbot! A cryptocurrency prediction and tracking bot.",
+            color=discord.Color.blue()
+        )
+
+        # Commands section
+        embed.add_field(
+            name="🤖 Commands",
+            value=(
+                "**`/predict <currency>`**\n"
+                "Create a prediction poll for a cryptocurrency price.\n"
+                "• `currency`: The cryptocurrency symbol (e.g., bitcoin, ethereum)\n"
+                "• Optional: Attach an image for technical analysis\n\n"
+                "**`/help`**\n"
+                "Display this help message\n"
+            ),
+            inline=False
+        )
+
+        # Context Menu Commands section
+        embed.add_field(
+            name="📊 Context Menu Features",
+            value=(
+                "**`Download CSV`** (Admin only)\n"
+                "Right-click any prediction message > Apps > Download CSV\n"
+                "• Downloads reaction data and displays a graph\n"
+                "• Shows who voted and when they voted\n"
+            ),
+            inline=False
+        )
+
+        # Reactions section
+        embed.add_field(
+            name="⚡ How to Participate",
+            value=(
+                "1. Find a prediction message\n"
+                "2. React with ⬆️ if you think the price will go up\n"
+                "3. React with ⬇️ if you think the price will go down\n"
+                "4. You can change your prediction by selecting a different reaction\n"
+            ),
+            inline=False
+        )
+
+        embed.set_footer(text="For additional support or questions, contact the server administrators")
+        
+        await ctx.reply(embed=embed, ephemeral=True)
+        
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.user_id == self.bot.user.id:
